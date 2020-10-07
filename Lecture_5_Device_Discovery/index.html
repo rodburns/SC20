@@ -62,7 +62,9 @@
 					## Learning Objectives
 					* Learn about the SYCL system devices and how to traverse them
 					* Learn how to query information about a platform or device
-					* Learn how to select a device; both manually and using device selectors
+					* Learn how to select a device
+					  * Manually
+					  * Using device selectors
                 </section>
 				<!--Slide 3-->
 				<section>
@@ -70,8 +72,8 @@
 						#### SYCL System Devices
 					</div>
 					<div class="container" data-markdown>
-						* A SYCL application can execute work across a range of different heterogeneous devices.
-						* The devices that are available in any given system are determined at runtime through device discovery.
+						* A SYCL application can execute work across a range of different heterogeneous devices
+						* The devices that are available in any given system are determined at runtime through device discovery
 					</div>
 				</section>
 				<!--Slide 4-->
@@ -80,10 +82,10 @@
 						#### Platforms and devices
 					</div>
 					<div class="container" data-markdown>
-						* The SYCL runtime will discover a set of platforms that are available in the system.
-						  * Each platform represents a backend implementation such as Intel OpenCL and Nvidia OpenCL.
-						* The SYCL runtime will also discover all the devices available for each of those platforms.
-						  * CPU, GPU, FPGA, and other kinds of accelerators.
+						* The SYCL runtime will discover a set of platforms that are available in the system
+						  * Each platform represents a backend implementation such as Intel OpenCL and Nvidia OpenCL
+						* The SYCL runtime will also discover all the devices available for each of those platforms
+						  * CPU, GPU, FPGA, and other kinds of accelerators
 					</div>
 					<div class="col" data-markdown>
 						![SYCL](../common-revealjs/images/devices-1.png "SYCL-Devices")
@@ -95,11 +97,11 @@
 						#### Host device
 					</div>
 					<div class="container" data-markdown>
-						* In SYCL there is also a host device which executes SYCL kernels as native C++.
-						  * The host device emulates the execution and memory model of a SYCL device.
+						* In SYCL there is also a host device which executes SYCL kernels as native C++
+						  * The host device emulates the execution and memory model of a SYCL device
 						* This is very useful for debugging SYCL kernels.
-						* There is only ever one host device and that device is associated with a host platform.
-						  * This is generally a CPU implementation.
+						* There is only ever one host device and that device is associated with a host platform
+						  * This is generally a CPU implementation
 					</div>
 					<div class="container">
 						<div class="col" data-markdown>
@@ -113,9 +115,9 @@
 						#### Platform and device classes
 					</div>
 					<div class="container" data-markdown>
-						* Platforms and devices are represented by the `platform` and `device` classes respectively.
-						* A default constructed platform object represents the host platform.
-						* A default constructed device object represents the host device.
+						* Platforms and devices are represented by the `platform` and `device` classes respectively
+						* A default constructed platform object represents the host platform
+						* A default constructed device object represents the host device
 					</div>
 					<div class="container">
 						<div class="col" data-markdown>
@@ -128,9 +130,9 @@
 						#### Querying the devices
 					</div>
 					<div class="hbox" data-markdown>
-						* In SYCL there are two ways to query a system’s devices.
-						  * The devices can be manually queried and iterated over via APIs of the platform and device classes .
-						  * The devices can be automatically queried and iterated over using a use  specified heuristic by a device selector object.
+						* In SYCL there are two ways to query a system’s devices
+						  * The devices can be manually queried and iterated over via APIs of the platform and device classes
+						  * The devices can be automatically queried and iterated over using a user-specified heuristic as a device selector object
 					</div>
                 </section>
 				<!--Slide 7-->
@@ -150,9 +152,9 @@ auto platforms = platform::get_platforms();
 						</div>
 					</div>
 					<div class="smaller-size-font" data-markdown>
-							* The platform class provides the static function `get_platforms`.
-							  * It retrieves a vector of all available platforms in the system.
-							* This includes the host platform.
+							* The platform class provides the static function `get_platforms`
+							  * It retrieves a vector of all available platforms in the system
+							* This includes the host platform
 					</div>
 				</section>
 				<!--Slide 8-->
@@ -174,8 +176,8 @@ auto intelDevices = intelPlatform.get_devices();
 					<div class="smaller-size-font" data-markdown>
 							* The platform class provides the member function
 							`get_devices` that returns a vector of all devices
-							associated with that platform.
-							* This includes the host device if the platform object represents a host platform.
+							associated with that platform
+							* This includes the host device if the platform object represents a host platform
 					</div>
 				</section>
 				<!--Slide 9-->
@@ -197,8 +199,8 @@ auto devices = device::get_devices();
 					<div class="smaller-size-font" data-markdown>
 							* The device class also provides the static
 							function `get_devices` that returns a vector of all
-							available devices in the system.
-							* This includes the host device.
+							available devices in the system
+							* This includes the host device
 					</div>
 				</section>
 				<!--Slide 10-->
@@ -211,10 +213,10 @@ auto devices = device::get_devices();
 							![Device Topology](../common-revealjs/images/topology-1.png "Device-Topology")
 						</div>
 						<div class="col-right-1" data-markdown>
-							* To simplify the process of traversing the system devices SYCL provides device selectors.
-							* A device selector is is a C++ function object, derived from the `device_selector` class, which defines a heuristic for scoring devices.
+							* To simplify the process of traversing the system devices SYCL provides device selectors
+							* A device selector is is a C++ function object, derived from the `device_selector` class, which defines a heuristic for scoring devices
 							* SYCL provides a number of standard device selectors, e.g. `default_selector_v`, `gpu_selector_v`, etc.
-							* Users can also create their own device selectors.
+							* Users can also create their own device selectors
 						</div>
 					</div>
 				</section>
@@ -234,9 +236,9 @@ auto gpuDevice = gpu_selector_v.select_device();
 						</div>
 					</div>
 					<div class="container" data-markdown>
-							* The `device_selector` class provides the member function `select_device`.
-							* Queries all devices and returns the one with the highest "score".
-							* A device with a negative score will never be chosen.
+							* The `device_selector` class provides the member function `select_device`
+							* Queries all devices and returns the one with the highest "score"
+							* A device with a negative score will never be chosen
 					</div>
 				</section>
 				<!--Slide 12-->
@@ -255,8 +257,8 @@ auto chosenDevice = default_selector_v.select_device();
 						</div>
 					</div>
 					<div class="container" data-markdown>
-							* The `default_selector_v` is a standard device selector type.
-							* Chooses a device based on an implementation defined heuristic.
+							* The `default_selector_v` is a standard device selector type
+							* Chooses a device based on an implementation-defined heuristic
 					</div>
 				</section>
 				<!--Slide 13-->
@@ -275,8 +277,8 @@ struct gpu_selector : <mark>public device_selector</mark> {
 						</code></pre>
 					</div>
 					<div class="hbox" data-markdown>
-						* A device selector must inherit from the `device_selector` class.
-						* A device selector must have a function call operator which takes a reference to a device.
+						* A device selector must inherit from the `device_selector` class
+						* A device selector must have a function call operator which takes a reference to a device
 					</div>
 				</section>
 				<!--Slide 14-->
@@ -330,7 +332,7 @@ int main(int argc, char *argv[]) {
 						</code></pre>
 					</div>
 					<div class="hbox" data-markdown>
-						* Now that there is a device selector that chooses a specific device we can use that to construct a queue.
+						* Now that there is a device selector that chooses a specific device we can use that to construct a queue
 					</div>
 				</section>
 				<!--Slide 16-->
@@ -351,9 +353,9 @@ auto platformName
 						</div>
 					</div>
 					<div class="container" data-markdown>
-							* Information about platforms and devices can be queried using the template member function `get_info`.
-							* The info that you are querying is specified by the template parameter.
-							* You can also query a device for its associated platform with the `get_platform` member function.
+							* Information about platforms and devices can be queried using the template member function `get_info`
+							* The info that you are querying is specified by the template parameter
+							* You can also query a device for its associated platform with the `get_platform` member function
 					</div>
 				</section>
 				<!--Slide 17-->
@@ -369,9 +371,9 @@ bool supportsFp16 = dev.has(aspect::fp16);
 						</div>
 						<div class="col" data-markdown>
 							* Capabilities of a device or platform are
-							represented by aspects.
+							represented by aspects
 							* These can be queried via the `has` member
-							function.
+							function
 						</div>
 					</div>
 				</section>
