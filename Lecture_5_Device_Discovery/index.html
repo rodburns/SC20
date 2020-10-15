@@ -268,7 +268,7 @@ auto chosenDevice = default_selector_v.select_device();
 					</div>
 					<div class="container">
 						<code><pre>
-struct gpu_selector : <mark>public device_selector</mark> {
+struct my_gpu_selector : <mark>public device_selector</mark> {
 
   <mark>int operator()(const device& dev) const override {</mark>
 
@@ -288,7 +288,7 @@ struct gpu_selector : <mark>public device_selector</mark> {
 					</div>
 					<div class="container">
 						<code><pre>
-struct gpu_selector : public device_selector {
+struct my_gpu_selector : public device_selector {
 
   int operator()(const device& dev) const override {
     <mark>if (dev.is_gpu()){</mark>
@@ -313,7 +313,7 @@ struct gpu_selector : public device_selector {
 					</div>
 					<div class="container">
 						<code><pre>
-struct gpu_selector : public device_selector {
+struct my_gpu_selector : public device_selector {
 
   int operator()(const device& dev) const override {
     if (dev.is_gpu()){ 
@@ -326,7 +326,7 @@ struct gpu_selector : public device_selector {
 };
 
 int main(int argc, char *argv[]) {
-  <mark>auto gpuQueue = queue{gpu_selector_v};</mark>
+  <mark>auto gpuQueue = queue { my_gpu_selector {} };</mark>
 
 }
 						</code></pre>
@@ -345,7 +345,7 @@ int main(int argc, char *argv[]) {
 							<code><pre>
 auto plt = dev.get_platform();
 auto platformName
-  = dev.get_info&lt;info::device::name&gt;();
+  = dev.get_info&lt;info::platform::name&gt;();
 							</code></pre>
 						</div>
 						<div class="col-right-2" data-markdown>
